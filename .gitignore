@@ -1,0 +1,12 @@
+00. Sim/Project Backups/
+00. Sim/*.workspace
+01. Firmware/__history/
+*.STA
+*.cof
+*.err
+*.sym
+*.esym
+*.xsym
+*.hex
+*.lst
+*.tre
