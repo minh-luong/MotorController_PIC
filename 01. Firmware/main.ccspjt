@@ -11,12 +11,12 @@ Type=4
 1=main.c
 
 [defines]
-buildcount=37
+buildcount=59
 
 [ProjectLog]
-Days=1
+Days=3
 D1=22-06-2025
-D1_L=13
+D1_L=17
 D1_L1=[28204]Stopped Editing.
 D1_L2=[36647]Started Editing.
 D1_L3=[36948]Stopped Editing.
@@ -30,15 +30,45 @@ D1_L10=[74725]Started Editing.
 D1_L11=[75058]Stopped Editing.
 D1_L12=[75135]Started Editing.
 D1_L13=[79697]Stopped Editing.
+D1_L14=[80196]Started Editing.
+D1_L15=[80504]Stopped Editing.
+D1_L16=[80871]Started Editing.
+D1_L17=[81340]Stopped Editing.
+D2=23-06-2025
+D2_L=3
+D2_L1=[4234]Started Editing.
+D2_L2=[6360]Stopped Editing.
+TotalEdit=114
+TotalDebug=0
+D2_E=114
+D2_D=0
+D2_L3=[6416]Project Closed.
+D3=25-06-2025
+D3_L=13
+D3_L1=[5751]Project Opened.
+D3_L2=[6324]Started Editing.
+D3_L3=[6915]Stopped Editing.
+D3_L4=[9908]Started Editing.
+D3_L5=[12318]Stopped Editing.
+D3_L6=[13160]Started Editing.
+D3_L7=[13486]Stopped Editing.
+D3_L8=[13503]Started Editing.
+D3_L9=[13807]Stopped Editing.
+D3_L10=[14358]Started Editing.
+D3_L11=[14745]Stopped Editing.
+D3_L12=[15132]Started Editing.
+D3_L13=[15435]Stopped Editing.
 
 [Opened Files]
 1=main.c
-t1=19
+t1=1
 Count=3
 2=main.h
-t2=1
-3=C:\Program Files (x86)\PICC\Devices\16F877A.h
-t3=385
+t2=41
+3=interrupt.h
+t3=41
+4=interrupt.h
+t4=1
 
 [Documentation]
 1=D:\PROJECT\PIC16F877A\MotorController\01. Firmware\main Notes.txt
