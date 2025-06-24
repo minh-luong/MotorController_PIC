@@ -3,15 +3,15 @@
 
 #include <main.h>
 
-int32 time_ms = 0;
-int32 encoder_cnt = 0;
-extern int32 cur_speed;
-int16 timer1_cnt = 0;
-float dir = 0;
-signed int16 step = 0;
+extern int32 ms_tick;
+extern int32 encoder_cnt;
+extern int32 measured_rpm;
+extern int16 timer1_cnt;
+extern float dir;
 extern int8 is_start;
-int8 is_adc_mode = 0;
-signed int8 is_forward = 1;
+extern int8 is_adc_mode;
+extern int8 wait_stop;
+extern signed int8 is_forward;
 
 #int_ext
 void ext_isr()
@@ -31,16 +31,18 @@ void ext_isr()
 void timer1_isr()
 {
    clear_interrupt(INT_TIMER1);
+   ms_tick++;
+   
    timer1_cnt++;
-   if(timer1_cnt == 2)
+   if(timer1_cnt == 1000)
    {
       disable_interrupts(INT_EXT);
-      cur_speed = (dir * encoder_cnt / PPR) * 60;
+      measured_rpm = (dir * encoder_cnt / PPR) * 60;
       encoder_cnt = 0;
       timer1_cnt = 0;
       enable_interrupts(INT_EXT);
    }
-   set_timer1(3036);
+   set_timer1(64911);
 }
 
 #int_rb
@@ -56,16 +58,31 @@ void rb_change_isr()
    else if(0 == input(BUTTON_FORW) && is_start)
    {
       is_adc_mode = 0;
-      is_forward = 1;
+      if(is_forward == -1)
+      {
+         is_forward = 1;
+         set_motor(0);
+         wait_stop = 1;
+      }
    }
    else if(0 == input(BUTTON_REVR) && is_start)
    {
       is_adc_mode = 0;
-      is_forward = -1;
+      if(is_forward == 1)
+      {
+         is_forward = -1;
+         set_motor(0);
+         wait_stop = 1;
+      }
    }
    else if(0 == input(BUTTON_ADC_MODE) && is_start)
    {
-      is_adc_mode = 1;
+      if(is_adc_mode == 0)
+      {
+         is_adc_mode = 1;
+         set_motor(0);
+         wait_stop = 1;
+      }
    }
 }
 #endif

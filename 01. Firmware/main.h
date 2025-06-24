@@ -5,7 +5,7 @@
 
 #device ADC=10
 #fuses NOWDT, NOBROWNOUT, NOLVP, HS 
-#use delay(crystal=4000000)
+#use delay(crystal=20000000)
 
 // LCD1602
 #define LCD_ENABLE_PIN  PIN_D2
@@ -34,7 +34,7 @@
 
 #define PPR    330
 
-extern signed int16 step;
+extern signed int16 cur_speed;
 void initialize()
 {
    set_tris_b(0xFF);
@@ -49,10 +49,10 @@ void initialize()
    setup_adc_ports(AN0);
    set_adc_channel(0);
    delay_us(20);
-   step = read_adc();
+   cur_speed = read_adc();
    
-   setup_timer_1(T1_INTERNAL | T1_DIV_BY_8);   // 4MHz / 4 / 8 = 125kHz ~ 8us
-   set_timer1(3036);    // 65536 - (0.5s / 1.6us)
+   setup_timer_1(T1_INTERNAL | T1_DIV_BY_8);   // 20MHz / 4 / 8 = 625kHz ~ 1.6us
+   set_timer1(64911);    // 65536 - (1ms / 1.6us)
    
    ext_int_edge(L_TO_H);
    enable_interrupts(INT_EXT);
@@ -77,7 +77,7 @@ void set_motor(signed int16 speed)
    }
 }
 
-int8 is_start = 0;
+extern int8 is_start;
 extern int8 is_adc_mode;
 void check_button_start()
 {

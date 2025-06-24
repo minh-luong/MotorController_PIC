@@ -1,10 +1,16 @@
 #include <main.h>
 #include <interrupt.h>
 
-int32 cur_speed = 0;
-extern signed int16 step;
-extern int8 is_start;
-extern signed int is_forward;
+int32 ms_tick = 0;
+int32 encoder_cnt = 0;
+int32 measured_rpm = 0;
+int16 timer1_cnt = 0;
+float dir = 0;
+signed int16 cur_speed = 0;
+int8 is_start = 0;
+int8 is_adc_mode = 0;
+int8 wait_stop = 0;
+signed int8 is_forward = 1;
 
 void main() 
 {
@@ -23,17 +29,24 @@ void main()
       {
          set_adc_channel(0);
          delay_us(20);
-         step = read_adc();
+         cur_speed = read_adc();
       }
       
-      if(is_start)
-         set_motor(is_forward * step);
+      if(wait_stop)
+      {
+         if(measured_rpm == 0)
+            wait_stop = 0;
+      }
+      else if(is_start)
+         set_motor(is_forward * cur_speed);
       else
          set_motor(0);
-         
-      lcd_gotoxy(1, 2);
-      printf(lcd_putc, "Speed: %4ld", cur_speed);
-      delay_ms(100);
+      
+      if(ms_tick % 100 == 0)
+      {
+         lcd_gotoxy(1, 2);
+         printf(lcd_putc, "Speed: %4ld", measured_rpm);
+      }
    }
 }
 
